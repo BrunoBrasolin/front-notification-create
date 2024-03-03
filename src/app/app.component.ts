@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule, MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +27,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  constructor(private service: AppService) {
+  constructor(private service: AppService, private snackBar: MatSnackBar) {
   }
   public notification: NotificationDTO = {
     subject: '',
@@ -35,6 +35,9 @@ export class AppComponent {
     body: '',
     dueDate: new Date()
   };
+  public horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  public verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+  public timer: number = 3000;
 
   onClickCriar() {
     if (this.notification.subject == null
@@ -45,6 +48,26 @@ export class AppComponent {
       return;
     }
 
-    this.service.UpdateSalary(this.notification).subscribe(s => console.log(s));
+    this.service.UpdateSalary(this.notification)
+      .subscribe({
+        next: this.handleSuccess.bind(this),
+        error: this.handleError.bind(this)
+      });
+  }
+
+  handleSuccess(): void {
+    this.snackBar.open(`Notificação cadastrada!`, 'Fechar', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration: this.timer
+    });
+  }
+
+  handleError(): void {
+    this.snackBar.open('Erro, favor contatar o Maggie Hub!', 'Fechar', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration: this.timer
+    });
   }
 }
