@@ -1,29 +1,35 @@
-<main>
+<main class="main">
   <h1>Criar Notificação</h1>
 
-  <section>
-    <label>
-      Recipient:
-      <input type="text" [(ngModel)]="notification.recipient" />
-    </label>
-    <br>
-    <label>
-      Subject:
-      <input type="text" [(ngModel)]="notification.subject" />
-    </label>
-    <br>
-    <label>
-      Body:
-      <textarea [(ngModel)]="notification.body"></textarea>
-    </label>
-    <br>
-    <label>
-      Due Date:
-      <input type="date" [(ngModel)]="notification.dueDate" />
-    </label>
+  <mat-form-field>
+    <mat-label>E-mail</mat-label>
+    <input matInput type="email" [(ngModel)]="notification.recipient" />
+  </mat-form-field>
 
-    <br>
+  <br>
 
-    <button type="button" (click)="onClickCriar()">Criar</button>
-  </section>
+  <mat-form-field>
+    <mat-label>Assunto</mat-label>
+    <input matInput type="email" [(ngModel)]="notification.subject" />
+  </mat-form-field>
+
+  <br>
+
+  <mat-form-field>
+    <mat-label>Corpo</mat-label>
+    <textarea matInput [(ngModel)]="notification.body"></textarea>
+  </mat-form-field>
+
+  <br>
+
+  <mat-form-field>
+    <mat-label>Data Limite</mat-label>
+    <input matInput [matDatepicker]="picker">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <br>
+
+  <button mat-raised-button color="primary" (click)="onClickCriar()">Atualizar</button>
 </main>
